@@ -211,19 +211,44 @@ xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
 
 ## SPICE Simulations
 ### CTAT with Single BJT
-![CTAT with single BJT](prelayout_CTAT_single_BJT.png)
+![CTAT with single BJT](prelayout_results/CTAT_single_BJT.png)
 ### CTAT with Multiple BJT
+![CTAT with Multiple BJT](prelayout_results/CTAT_mul_BJT.png)
 ### CTAT with Varying Current
+![CTAT with Variable Current](prelayout_results/CTAT_var_current.png)
 ### PTAT Voltage Generation
+![PTAT Voltage Generation](prelayout_results/PTAT.png)
+![PTAT Voltage Generation](prelayout_results/PTAT1.png)
 ### Resistor Tempco
+![Resistor Tempco](prelayout_results/res_tempco.png)
+![Resistor Tempco](prelayout_results/res_tempco1.png)
 ### FET Tempco
+![FET Tempco](prelayout_results/fet_tempco.png)
 ### BGR with Ideal Op-amp
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal1.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal2.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal3.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal4.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal5.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal6.png)
+![BGR with Ideal Op-amp](prelayout_results/bgr_ideal7.png)
 ### BGR with SBCM(TT Corner)
+![BGR with SBCM](prelayout_results/sbcm_tt1.png)
+![BGR with SBCM](prelayout_results/sbcm_tt2.png)
+![BGR with SBCM](prelayout_results/sbcm_tt3.png)
+![BGR with SBCM](prelayout_results/sbcm_tt4.png)
 ### BGR with SBCM(FF Corner)
-### BGR with SBCM(TT Corner)
+![BGR with SBCM](prelayout_results/sbcm_ff1.png)
+![BGR with SBCM](prelayout_results/sbcm_ff2.png)
+![BGR with SBCM](prelayout_results/sbcm_ff3.png)
+### BGR with SBCM(SS Corner)
+![BGR with SBCM](prelayout_results/sbcm_ss1.png)
+![BGR with SBCM](prelayout_results/sbcm_ss2.png)
+![BGR with SBCM](prelayout_results/sbcm_ss3.png)
 ### BGR with Variable Supply
-
-
-
+![BGR with Variable Supply](prelayout_results/supply_var1.png)
+![BGR with Variable Supply](prelayout_results/supply_var2.png)
+![BGR with Variable Supply](prelayout_results/supply_var3.png)
 
 
