@@ -179,46 +179,6 @@ Schematic Design   ──[Ngspice + Sky130 models]──►  Pre-Layout Simulati
        ▼
 Post-Layout Sim    ──[Ngspice + extracted netlist]──►  Final Verification
 
-### Writing a SPICE Netlist
-A SPICE netlist is a text file that describes a circuit — its components, connections, and simulation commands — in a format that ngspicecan read and simulate. Every .sp file in this project follows the same structure.
-6.1 Netlist Structure
-*  Title / Comment line (must be the first line)
-*  ----------------------------
-*  1. Include PDK model files
-*  ----------------------------
-.lib "/path/to/sky130.lib.spice" tt
-*  ----------------------------
-*  2. Global supply nodes
-*  ----------------------------
-.global gnd vdd
-vdd vdd gnd 1.8
-LVS tool — compares the extracted SPICE netlist from Magic against the pre-layout schematic netlist.
-git clone git://opencircuitdesign.com/netgen
-cd netgen
-./configure
-sudo make
-sudo make install
-----------------------------
-*  3. Circuit components
-*  ----------------------------
-* Syntax: ComponentName  Node+ Node-  ModelName  Parameters
-* BJT (PNP)
-xqp1  vdd  net1  net1  sky130_fd_pr__pnp_05v5_W3p40L3p40  m=1
-* MOSFET (PFET)
-xmp1  net1  net2  vdd  vdd  sky130_fd_pr__pfet_01v8_lvt  l=2 w=5 m=4
-* MOSFET (NFET)
-xmn1  net2  net3  gnd  gnd  sky130_fd_pr__nfet_01v8_lvt  l=1 w=5 m=8
-* Resistor
-xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
-*  ----------------------------
-*  4. Simulation commands
-*  ----------------------------
-.dc temp -40 125 5        * DC sweep: temperature from -40 to 125°C in steps of 5
-.control
-  run
-  plot v(vref)            * Plot the reference voltage node
-.endc
-.end
 
 ## SPICE Simulations
 ### CTAT with Single BJT
