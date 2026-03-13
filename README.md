@@ -274,6 +274,7 @@ A clean LVS result confirms that:
     Magic VLSI Layout Tool
     Netgen LVS Tool
 Razavi, B. — Design of Analog CMOS Integrated Circuits, 2nd ed.
+
 Banba et al. — "A CMOS Bandgap Reference Circuit with Sub-1-V Operation", IEEE JSSC 1999
 
 
