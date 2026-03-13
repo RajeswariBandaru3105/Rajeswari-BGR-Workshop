@@ -254,28 +254,28 @@ xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
 ## Layout Results
 ### Leaf Cell Layouts
 #### NFET
-![NFET](layout/nfet.png)
-![NFET](layout/nfet1.png)
+![NFET](layout_results/nfet.png)
+![NFET](layout_results/nfet1.png)
 #### PFET
-![PFET](layout/pfet.png)
+![PFET](layout_results/pfet.png)
 #### PNP BJT Unit Cell
-![PNP BJT Unit Cell](layout/pnp10.png)
+![PNP BJT Unit Cell](layout_results/pnp10.png)
 #### Resistor Unit Cell
-![Resistor Unit Cell](layout/res1p41.png)
+![Resistor Unit Cell](layout_results/res1p41.png)
 
 ### Block Level Layouts
 #### NFET Bank
-![NFET Bank](layout/nets.png)
+![NFET Bank](layout_results/nets.png)
 #### PFET Bank
-![PFET Bank](layout/pfets.png)
+![PFET Bank](layout_results/pfets.png)
 #### Resistor Bank
-![Resistor Bank](layout/resbank.png)
+![Resistor Bank](layout_results/resbank.png)
 #### BJT Array
-![BJT Array](layout/pnpt1.png)
+![BJT Array](layout_results/pnpt1.png)
 #### Starter NFET
-![Starter NFET](layout/starternfet.png)
+![Starter NFET](layout_results/starternfet.png)
 ### Top Level Layout
-![Top Level Layout](layout/top.png)
+![Top Level Layout](layout_results/top.png)
 
 ## LVS Verification
 After extraction, the layout netlist is compared against the schematic netlist using Netgen.
