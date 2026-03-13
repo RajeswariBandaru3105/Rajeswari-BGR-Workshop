@@ -210,11 +210,11 @@ xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
 .end
 
 ## SPICE Simulations
-1. CTAT with Single BJT
-2. CTAT with Multiple BJT
-3. CTAT with varying current
-4. PTAT with Ideal voltage source(VCVS)
-5. 
+### CTAT with Single BJT
+![1](prelayout results/1.png)  
+### CTAT with Multiple BJT
+### CTAT with varying current
+### PTAT with Ideal voltage source(VCVS)
 
 
 
