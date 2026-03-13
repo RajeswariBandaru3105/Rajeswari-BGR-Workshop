@@ -251,4 +251,52 @@ xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
 ![BGR with Variable Supply](prelayout_results/supply_var2.png)
 ![BGR with Variable Supply](prelayout_results/supply_var3.png)
 
+## Layout Results
+### Leaf Cell Layouts
+#### NFET
+![NFET](layout/nfet.png)
+![NFET](layout/nfet1.png)
+#### PFET
+![PFET](layout/pfet.png)
+#### PNP BJT Unit Cell
+![PNP BJT Unit Cell](layout/pnp10.png)
+#### Resistor Unit Cell
+![Resistor Unit Cell](layout/res1p41.png)
+
+### Block Level Layouts
+#### NFET Bank
+![NFET Bank](layout/nets.png)
+#### PFET Bank
+![PFET Bank](layout/pfets.png)
+#### Resistor Bank
+![Resistor Bank](layout/resbank.png)
+#### BJT Array
+![BJT Array](layout/pnpt1.png)
+#### Starter NFET
+![Starter NFET](layout/starternfet.png)
+### Top Level Layout
+![Top Level Layout](layout/top.png)
+
+## LVS Verification
+After extraction, the layout netlist is compared against the schematic netlist using Netgen.
+netgen
+Inside netgen console window enter below command for LVS verification.
+lvs "top.spice top" "bgr_lvt_rpolyh_3p40.sp top" /home/vsduser/Desktop/Work/eda-technology/sky130/tech/netgen//sky130A_setup.tcl
+A clean LVS result confirms that:
+
+    All devices match in type, size, and connectivity.
+    No shorts or opens were introduced during layout.
+    
+## References
+    VSD — Bandgap Reference Design Workshop
+    SkyWater Sky130 PDK Documentation
+    Google Sky130 Primitive Devices
+    EDA Technology Files for Sky130
+    ngspice — Open Source SPICE Simulator
+    Magic VLSI Layout Tool
+    Netgen LVS Tool
+Razavi, B. — Design of Analog CMOS Integrated Circuits, 2nd ed.
+Banba et al. — "A CMOS Bandgap Reference Circuit with Sub-1-V Operation", IEEE JSSC 1999
+
+
 
