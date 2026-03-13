@@ -96,40 +96,35 @@ A startup circuit is an auxiliary circuit used to ensure that a system (typicall
 |Sky130 Model |	sky130_fd_pr__res_high_po|
 ## Circuit Design
 Step 1 — Current Calculation
-
 Max power = 60 µW at VDD = 1.8 V → max total current = 33.33 µA.
 With 3 branches: 10 µA/branch (3 × 10 = 30 µA, leaving headroom for start-up).
 
 Step 2 — BJT ratio N
-
 A moderate N = 8 BJTs in parallel in branch 2 gives:
-
     Good layout matching (common-centroid array)
     Moderate R1 value (not too large, keeping area reasonable)
+
 Step 3 — R1 calculation
-
 R 1 = V t ln ⁡ ( N ) I = 26   mV × ln ⁡ ( 8 ) 10.7   μ A ≈ 5   k Ω
-
 Implemented as: W = 1.41 µm, L = 7.8 µm, unit = 2 kΩ → 2 series + 2 parallel (2+2+(2‖2))
 
 Step 4 — R2 calculation
-
 Slope of V_R2 = (R2/R1) × ln(8) × 115 µV/°C
 Slope of V_Q3 = −1.6 mV/°C
 Setting sum to zero → R2 ≈ 33 kΩ
-
 Implemented as: 16 in series + 2 in parallel (2+2+...+2+(2‖2))
 
 Step 5 — PMOS sizing (SBCM)
-
 MP1, MP2: Both in saturation. Long channel (L = 2 µm) to reduce channel length modulation.
 Final size: L = 2 µm, W = 5 µm, M = 4
-Step 6 — NMOS sizing (SBCM)
 
+Step 6 — NMOS sizing (SBCM)
 MN1, MN2: Operated in deep sub-threshold to achieve low current with compact area.
 Final size: L = 1 µm, W = 5 µm, M = 8
+
 ## Final BGR Circuit
 ![Final BGR Circuit](circuits/finalbgr.png
+
 ## Tools and PDK Setup
 The complete design flow uses three open-source EDA tools:
 |Tool |	Version |	Role |	PDK Artifact Used|
@@ -137,21 +132,20 @@ The complete design flow uses three open-source EDA tools:
 |Ngspice |	34.0 |	Pre- and post-layout SPICE simulation |	Sky130 model file|
 |Magic |	8.3.178 |	Layout design, DRC, parasitic extraction (PEX) 	|Sky130 tech file, magic tech file|
 |Netgen |	1.5.185 |	LVS (Layout vs Schematic) |	Sky130 Netgen rule file|
+
 #### Ngspice
-
 Open-source SPICE simulator for electrical circuit simulation. Used to perform DC sweep, transient, and temperature sweeps.
-
 sudo apt-get install ngspice
+
 #### Magic
-
 Berkeley VLSI layout editor — used for drawing layout, running DRC, and extracting parasitics.
-
 wget http://opencircuitdesign.com/magic/archive/magic-8.3.32.tgz
 tar xvfz magic-8.3.32.tgz
 cd magic-8.3.32
 ./configure
 sudo make
 sudo make install
+
 ### PDK Setup
 This project uses Google SkyWater Sky130 — a 130 nm open-source process design kit.
 
@@ -175,26 +169,19 @@ Schematic Design   ──[Ngspice + Sky130 models]──►  Pre-Layout Simulati
 Post-Layout Sim    ──[Ngspice + extracted netlist]──►  Final Verification
 
 ### Writing a SPICE Netlist
-
-A SPICE netlist is a text file that describes a circuit — its components, connections, and simulation commands — in a format that ngspice can read and simulate. Every .sp file in this project follows the same structure.
+A SPICE netlist is a text file that describes a circuit — its components, connections, and simulation commands — in a format that ngspicecan read and simulate. Every .sp file in this project follows the same structure.
 6.1 Netlist Structure
-
 *  Title / Comment line (must be the first line)
-
 *  ----------------------------
 *  1. Include PDK model files
 *  ----------------------------
 .lib "/path/to/sky130.lib.spice" tt
-
 *  ----------------------------
 *  2. Global supply nodes
 *  ----------------------------
 .global gnd vdd
 vdd vdd gnd 1.8
-
-
 LVS tool — compares the extracted SPICE netlist from Magic against the pre-layout schematic netlist.
-
 git clone git://opencircuitdesign.com/netgen
 cd netgen
 ./configure
@@ -204,33 +191,30 @@ sudo make install
 *  3. Circuit components
 *  ----------------------------
 * Syntax: ComponentName  Node+ Node-  ModelName  Parameters
-
 * BJT (PNP)
 xqp1  vdd  net1  net1  sky130_fd_pr__pnp_05v5_W3p40L3p40  m=1
-
 * MOSFET (PFET)
 xmp1  net1  net2  vdd  vdd  sky130_fd_pr__pfet_01v8_lvt  l=2 w=5 m=4
-
 * MOSFET (NFET)
 xmn1  net2  net3  gnd  gnd  sky130_fd_pr__nfet_01v8_lvt  l=1 w=5 m=8
-
 * Resistor
 xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
-
 *  ----------------------------
 *  4. Simulation commands
 *  ----------------------------
 .dc temp -40 125 5        * DC sweep: temperature from -40 to 125°C in steps of 5
-
 .control
   run
   plot v(vref)            * Plot the reference voltage node
 .endc
 .end
 
-
 ## SPICE Simulations
-![CTAT Voltage](prelayout results/ctat@2v.PNG)
+1. CTAT with Single BJT
+2. CTAT with Multiple BJT
+3. CTAT with varying current
+4. PTAT with Ideal voltage source(VCVS)
+5. 
 
 
 
