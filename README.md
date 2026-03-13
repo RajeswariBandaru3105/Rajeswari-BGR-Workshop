@@ -2,59 +2,64 @@
 ## Introduction
 A bandgap reference is a voltage reference circuit widely used in integrated circuits to produce a stable, temperature-independent output voltage, typically around (the silicon bandgap energy). It operates by summing a voltage with a negative temperature coefficient (CTAT) and a voltage with a positive temperature coefficient (PTAT).
 ## Table of Contents
-- [Why Bandgap Reference?](#why-bandgap-reference)
-- [BGR Principle](#BGR-principle)
-- [CTAT Voltage Generation](#CTAT-voltage-generation)
-- [PTAT Voltage Generation](#PTAT-voltage-generation)
-- [Self Bias Current Mirror Circuit](#self-bais-current-mirror-circuit)
-- [Design Specification and Device Data Sheet](#device-specification-and-device-data-sheet)
-- [Tools and PDK setup](#toola-and-PDK-setup)
-- [Spice netlist Setup](#spice-netlist-setup)
-- [Prelayout Results](#prelayout-results)
-- [Physical layout](#physical-layout)
-- [LVS Verification](#LVS-verification)
-- [References](#references)
-## Why Bandgap Reference
+1. [Why Bandgap Reference?](#why-bandgap-reference)
+2.  [BGR Principle](#BGR-principle)
+3.  [CTAT Voltage Generation](#CTAT-voltage-generation)
+4.  [PTAT Voltage Generation](#PTAT-voltage-generation)
+5.  [Self Bias Current Mirror Circuit](#self-bais-current-mirror-circuit)
+6.  [Design Specification and Device Data Sheet](#device-specification-and-device-data-sheet)
+7.  [Tools and PDK setup](#toola-and-PDK-setup)
+8.  [Spice netlist Setup](#spice-netlist-setup)
+9.  [Prelayout Results](#prelayout-results)
+10.  [Physical layout](#physical-layout)
+11.  [LVS Verification](#LVS-verification)
+12.  [References](#references)
+    
+
+## Why a Bandgap Reference?
 A Bandgap Reference (BGR) is one of the most fundamental blocks in analog IC design — virtually every mixed-signal SoC contains one. Its job is to produce a precise, stable DC voltage that does not change with temperature, supply voltage, or process variation.
 ![Bandgap Reference](circuits/BGR1.png)
+
 ## BGR Principle
 A Bandgap Reference (BGR) circuit creates a stable voltage (typically) independent of temperature, power supply, and process variations. It works by summing two opposing temperature-dependent voltages: a Complementary to Absolute Temperature (CTAT) voltage (usually a diode) and a Proportional to Absolute Temperature (PTAT) voltage.
 ![BGR Principle](circuits/BGR_Principle.png)
+
 ## CTAT Voltage Generation
 CTAT stands for Complementary to Absolute Temperature. A CTAT voltage is an electronic signal that decreases linearly as the temperature increases. This behavior is primarily used in Bandgap Voltage References to cancel out the positive temperature coefficient of PTAT (Proportional to Absolute Temperature) voltages, resulting in a temperature-stable output.
 ![CTAT Voltage Generation](circuits/CTAT.png)
 ![CTAT voltage Generation](circuits/CTAT1.png)
 ![CTAT voltage Generation](circuits/Equation.png)
+
 ## PTAT Voltage Generation
 PTAT (Proportional To Absolute Temperature) voltage generation is a core technique in analog circuit design used to create a voltage that increases linearly with temperature. It is most commonly used in Bandgap Voltage References to cancel out the negative temperature dependence of a diode (CTAT) and produce a stable, temperature-independent reference.
 ![PTAT voltage Generation](circuits/PTAT.png)
 ![PTAT voltage Generation](circuits/PTAT1.png)
 ![PTAT voltage Generation](circuits/PTATEQN.png)
-## Self Bias Current Mirror Circuit
-A self-biased current mirror is
-a specialized circuit used in integrated circuit design to generate a stable reference current that is independent of supply voltage variations. Unlike basic current mirrors that require an external reference current, a self-biased circuit uses internal feedback loops to "bias itself" into a specific operating state.
-The SBCM has two stable operating points:
 
+## Self Bias Current Mirror Circuit
+A self-biased current mirror is a specialized circuit used in integrated circuit design to generate a stable reference current that is independent of supply voltage variations. Unlike basic current mirrors that require an external reference current, a self-biased circuit uses internal feedback loops to "bias itself" into a specific operating state.
+The SBCM has two stable operating points:
     I_in = I_out = 0 A (degenerate / undesired)
     The desired bias current
 
 At power-on, the circuit is at the zero-current point. The start-up circuit must:
-
     Detect the zero-current state and force the circuit out of it.
     Disengage once the correct operating point is reached — otherwise it will corrupt the bias.
 
 Operation:
-
     Initially, all branch currents = 0 → net2 follows VDD.
     When net2 voltage exceeds net6 by one V_T, current flows through MP5 → net1 rises → MN1/MN2 turn on → circuit reaches the desired operating point.
     Once stable, the start-up circuit is self-defeating: net2 drops to the correct bias level, MP5 turns off, and the start-up path is isolated.
 
 ![Self Bias CM Circuit](circuits/currentmirror.png)
+
 ## Start up Circuit
 A startup circuit is an auxiliary circuit used to ensure that a system (typically a Bandgap Reference (BGR)) moves from a "zero-current" state to its intended operating state upon power-up. 
 ![Start up Circuit](circuits/startup.png)
+
 ## Complete BGR Circuit
 ![Complete BGR Circuit](circuits/BGR.png)
+
 ## Design Specification and Device Data Sheet
 |Block |	Devices |
 |-----------------|-----------------------------------|
@@ -63,6 +68,7 @@ A startup circuit is an auxiliary circuit used to ensure that a system (typicall
 |CTAT branch |	Q1 (1× BJT) |
 | PTAT branch |	R1 (5 kΩ), Q2 (8× BJT parallel) |
 | Reference branch |	MP3, R2 (33 kΩ), Q3 (1× BJT) |
+
 ### Design Specifications
 | Parameter |	Target |
 |----------------------|-----------------------|
@@ -72,7 +78,9 @@ A startup circuit is an auxiliary circuit used to ensure that a system (typicall
 |Off Current | 	< 2 µA |
 |Start-up Time | 	< 2 µs |
 | Tempco of V_REF |	< 50 ppm/°C |
+
 ### Device Data Sheet
+
 #### MOSFET (LVT,1.8V)
 |Parameter |	NFET |	PFET |
 |-----------------|-----------|-----------|
@@ -80,6 +88,7 @@ A startup circuit is an auxiliary circuit used to ensure that a system (typicall
 |Voltage |	1.8 V |	1.8 V|
 |Threshold Voltage |	~0.4 V |	~−0.6 V|
 |Sky130 Model |	sky130_fd_pr__nfet_01v8_lvt |	sky130_fd_pr__pfet_01v8_lvt|
+
 #### PNP BJT
 |Parameter |	Value|
 |------------------|-------------------------------|
@@ -87,6 +96,7 @@ A startup circuit is an auxiliary circuit used to ensure that a system (typicall
 |Beta (β) |	~12|
 |Emitter Area |	11.56 µm² (3.40 × 3.40 µm)|
 |Sky130 Model |	sky130_fd_pr__pnp_05v5_W3p40L3p40|
+
 #### Resistor RPOLYH
 |Parameter	|Value|
 |-----------------------|--------------------------------------------|
@@ -94,6 +104,7 @@ A startup circuit is an auxiliary circuit used to ensure that a system (typicall
 |Tempco 	|2.5 Ω/°C|
 |Available Bin Widths |	0.35 µm, 0.69 µm, 1.41 µm, 2.85 µm, 5.73 µm|
 |Sky130 Model |	sky130_fd_pr__res_high_po|
+
 ## Circuit Design
 Step 1 — Current Calculation
 Max power = 60 µW at VDD = 1.8 V → max total current = 33.33 µA.
@@ -252,28 +263,35 @@ xra1  net3  net4  sky130_fd_pr__res_high_po_1p41  l=7.8 w=1.41 m=1
 ![BGR with Variable Supply](prelayout_results/supply_var3.png)
 
 ## Layout Results
+All layout is done in Magic with the Sky130A technology file.
+# Launch Magic with Sky130 tech
+magic -T /home/vsduser/Desktop/Work/eda-technology/sky130/tech/magic/sky130A.tech
+The layout is built hierarchically — starting from individual leaf cells, assembled into matched blocks, then placed and routed at the top level. All blocks use common-centroid placement and guard rings for noise isolation and mismatch reduction.
+
 ### Leaf Cell Layouts
-#### NFET
+These are the primitive device layouts that form the building blocks of the complete BGR.
+#### NFET (nfet.mag)
 ![NFET](layout_results/nfet.png)
 ![NFET](layout_results/nfet1.png)
-#### PFET
+#### PFET (pfet.mag)
 ![PFET](layout_results/pfet.png)
-#### PNP BJT Unit Cell
-![PNP BJT Unit Cell](layout_results/pnp10.png)
-#### Resistor Unit Cell
+#### PNP BJT Unit Cell (pnpt1.mag)
+![PNP BJT Unit Cell](layout_results/pnpt1.png)
+#### Resistor Unit Cell (res1p41.mag)
 ![Resistor Unit Cell](layout_results/res1p41.png)
 
 ### Block Level Layouts
-#### NFET Bank
+#### NFET Bank (nets.mag)
 ![NFET Bank](layout_results/nets.png)
-#### PFET Bank
+#### PFET Bank (pfets.mag)
 ![PFET Bank](layout_results/pfets.png)
-#### Resistor Bank
+#### Resistor Bank (resbank.mag)
 ![Resistor Bank](layout_results/resbank.png)
-#### BJT Array
-![BJT Array](layout_results/pnpt1.png)
-#### Starter NFET
+#### BJT Array (pnp10.mag)
+![BJT Array](layout_results/pnp10.png)
+#### Starter NFET (starternfet.mag)
 ![Starter NFET](layout_results/starternfet.png)
+
 ### Top Level Layout
 ![Top Level Layout](layout_results/top.png)
 
