@@ -134,7 +134,7 @@ MN1, MN2: Operated in deep sub-threshold to achieve low current with compact are
 Final size: L = 1 µm, W = 5 µm, M = 8
 
 ## Final BGR Circuit
-![Final BGR Circuit](circuits/finalbgr.png
+![Final BGR Circuit](circuits/finalbgr.png)
 
 ## Tools and PDK Setup
 The complete design flow uses three open-source EDA tools:
